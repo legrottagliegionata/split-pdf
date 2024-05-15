@@ -1,0 +1,38 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '3.0.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "22.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+application {
+    mainClass = "split.PDFFilterFX"
+    mainModule = "split"
+}
+
+jlink {
+    launcher {
+        name = 'Split pdf'
+
+    }
+}
+dependencies {
+    implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+//mainClassName = 'org.gl.PDFFilter'
+task dist {
+    dependsOn clean, jlinkZip
+    description "Calls clean and then jlinkZip [default]"
+}
